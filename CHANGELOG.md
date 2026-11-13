@@ -2,6 +2,13 @@
 
 El formato sigue versiones `MAYOR.MENOR.PARCHE`.
 
+## 0.1.23 — 2026-11-13
+- App instalable (PWA): manifiesto, iconos de Bettarea y modo sin conexión (service worker).
+- APK de Android compilado automáticamente por GitHub Actions en cada cambio y publicado en Releases (`bettarea.apk`), firmado siempre con la misma clave.
+- La app Android (Trusted Web Activity con Chrome) carga la web publicada: se actualiza sola y mantiene Bluetooth para la impresora.
+- Configuración → Actualizaciones: enlace para descargar el APK.
+- Las actualizaciones siguen llegando desde GitHub: primero se consulta la red y, sin internet, se usa la copia guardada.
+
 ## 0.1.22 — 2026-11-13
 - Nuevo: Recordatorios, con botón de campana en la cabecera y contador de los pendientes de hoy.
 - Lista de próximos recordatorios ordenados por fecha; alta con texto, día y hora, y atajos (30 min, 1 h, 3 h, mañana 9:00).

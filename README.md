@@ -1,33 +1,41 @@
 # Bettarea · Control interno
 
-App de venta, inventario y contabilidad de **Bettarea** (www.bettarea.es), pensada para tablet Android de 7" a 11".
+App de venta, inventario y contabilidad de **Bettarea** (www.bettarea.es), para tablet Android de 7" a 11".
 
-**App publicada:** https://makobita.github.io/BETTAREA/
+- **Web:** https://makobita.github.io/BETTAREA/
+- **APK Android:** https://github.com/makobita/BETTAREA/releases/latest/download/bettarea.apk
 
-## Archivos
-| Archivo | Para qué sirve |
+## Cómo funciona
+| Pieza | Qué hace |
 |---|---|
-| `index.html` | La app completa (un solo archivo). |
-| `version.json` | Versión publicada. La app lo consulta en *Configuración → Actualizaciones*. |
+| `index.html` | La app completa. |
+| `version.json` | Versión publicada; la app la consulta en *Configuración → Actualizaciones*. |
+| `manifest.webmanifest`, `sw.js`, `icon-*.png` | App instalable, icono y funcionamiento sin conexión. |
+| `.github/workflows/android.yml` | GitHub Actions compila el **APK** en cada cambio y lo publica en *Releases*. |
 | `CHANGELOG.md` | Historial de cambios. |
-| `.nojekyll` | Para que GitHub Pages sirva los archivos tal cual. |
 
-## Puesta en marcha (una sola vez)
-1. Sube estos archivos a la rama `main` del repositorio.
-2. En GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, rama `main`, carpeta `/ (root)` → **Save**.
-3. A los 1-2 minutos la app estará en https://makobita.github.io/BETTAREA/
-4. En la tablet ábrela con **Chrome** y usa el menú ⋮ → **Añadir a pantalla de inicio** para tenerla como una app.
+El APK es una *Trusted Web Activity*: abre la web publicada con el motor de Chrome (con Bluetooth para la impresora). Por eso **la app instalada se actualiza sola**: basta con subir los cambios a GitHub.
 
-## Cómo se publica una versión nueva
-1. Sustituye `index.html` por la versión nueva (lleva dentro `APP_VERSION`).
-2. Actualiza `version.json` con el mismo número, la fecha y las novedades.
-3. Añade la entrada en `CHANGELOG.md`.
+## Secretos necesarios (Settings → Secrets and variables → Actions)
+| Nombre | Valor |
+|---|---|
+| `ANDROID_KEYSTORE_B64` | Contenido de `bettarea.jks.b64` |
+| `ANDROID_KEYSTORE_PASSWORD` | Contraseña de la clave |
+
+Con ellos el APK se firma siempre con la misma clave y se puede instalar encima del anterior. **Guarda una copia de `bettarea.jks` y su contraseña fuera de GitHub.**
+
+## GitHub Pages
+*Settings → Pages → Deploy from a branch → `main` / `(root)` → Save.*
+
+## Publicar una versión nueva
+1. Sustituye `index.html` (lleva dentro `APP_VERSION`).
+2. Actualiza `version.json` con el mismo número, fecha y novedades, y añade la entrada en `CHANGELOG.md`.
+3. GitHub publica la web y compila el APK solo (pestaña *Actions*).
 4. En la tablet: *Configuración → Actualizaciones → Buscar actualización → Instalar*.
 
-Los datos (productos, ventas, ajustes) se guardan en la propia tablet y **se conservan al actualizar**.
+## Pantalla completa sin barra de dirección (opcional)
+Android solo quita la barra de dirección si la web demuestra que el APK es suyo, con el archivo
+`https://makobita.github.io/.well-known/assetlinks.json`. Para eso hace falta un repositorio llamado **`makobita.github.io`** con ese archivo (y un `.nojekyll`).
 
 ## Versiones
 `MAYOR.MENOR.PARCHE` — empezamos en **0.1.10**.
-- PARCHE (0.1.**11**): arreglos y cambios pequeños.
-- MENOR (0.**2**.0): funciones nuevas.
-- MAYOR (**1**.0.0): versión estable definitiva.

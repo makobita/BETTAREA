@@ -4,10 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
 <meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <meta name="theme-color" content="#FFFFFF" id="themeColor">
 <script>try{var t=localStorage.getItem('bettarea-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 <title>Bettarea · Control interno</title>
-<meta name="app-version" content="0.1.22">
+<meta name="app-version" content="0.1.23">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
@@ -1702,8 +1705,8 @@ $('#tkfile').addEventListener('change', async e=>{ const f=e.target.files[0]; e.
 try{ if(curTheme()==='dark') $('#themeColor').setAttribute('content','#121110'); }catch(e){}
 
 /* ================= VERSIONES Y ACTUALIZACIONES ================= */
-const APP_VERSION='0.1.22';
-const UPD={ owner:'makobita', repo:'BETTAREA', branch:'main', pages:'https://makobita.github.io/BETTAREA/', repoUrl:'https://github.com/makobita/BETTAREA' };
+const APP_VERSION='0.1.23';
+const UPD={ owner:'makobita', repo:'BETTAREA', branch:'main', pages:'https://makobita.github.io/BETTAREA/', repoUrl:'https://github.com/makobita/BETTAREA', apk:'https://github.com/makobita/BETTAREA/releases/latest/download/bettarea.apk' };
 const UPD_KEY='bettarea-update';
 const UPS=Object.assign({auto:true,last:0,latest:null},(()=>{ try{ return JSON.parse(localStorage.getItem(UPD_KEY)||'{}'); }catch(e){ return {}; } })());
 UPS.state='idle'; UPS.err='';
@@ -1754,6 +1757,8 @@ function cfgUpd(){
   ${stateCard}
   ${!nw?`<button class="btn ${st==='blocked'?'btn-g':'btn-p'}" style="height:50px" ${st==='checking'?'disabled':''} onclick="checkUpdate(true)">${I.refresh}Buscar actualización</button>`:''}
   <div class="toggle ${UPS.auto?'on':''}" onclick="UPS.auto=!UPS.auto;updSave();drawDev()"><div><b>Buscar al abrir la app</b><small>Te avisa si hay una versión nueva</small></div><span class="sw"></span></div>
+  <div class="devcard"><h4>App de Android</h4><p>La app instalada en la tablet carga siempre la última versión publicada: no hace falta reinstalarla para actualizar.</p>
+    <a class="btn btn-g" style="margin-top:12px;text-decoration:none" href="${UPD.apk}" target="_blank" rel="noopener">${I.down}Descargar APK (bettarea.apk)</a></div>
   <div class="devcard"><div class="devkv">
     <span>Repositorio</span><b><a href="${UPD.repoUrl}" target="_blank" rel="noopener" class="lnk">${UPD.owner}/${UPD.repo}</a></b>
     <span>Rama</span><b>${UPD.branch}</b>
@@ -1901,6 +1906,7 @@ async function rmAck(){ const r=RM.showing; rmClose(); if(r) await safe(()=>Stor
 async function rmSnooze(min){ const r=RM.showing; rmClose(); if(r){ const ts=Date.now()+min*60000; await safe(()=>Store.patch('reminders',r.id,{ts,fired:false})); toast('Te lo recuerdo a las '+hm(new Date(ts))); } drawReminders(); rmBadge(); }
 setInterval(rmCheck, 10000);
 
+if('serviceWorker' in navigator && location.protocol==='https:' && !inClaude()){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
 boot();
 setTimeout(rmCheck,3000);
 setTimeout(function chk(){ if(S.ready && (S.mode==='local'||S.products.length)) fixDemoPhotos(); else setTimeout(chk,1500); }, 2500);

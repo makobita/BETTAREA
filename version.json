@@ -1,10 +1,10 @@
 {
-  "version": "0.1.22",
+  "version": "0.1.23",
   "date": "2026-11-13",
   "notes": [
-    "Nuevo: Recordatorios (campana arriba a la derecha)",
-    "Lista de recordatorios futuros y alta con día, hora y texto, con atajos rápidos",
-    "Aviso en pantalla con sonido a la hora indicada: Hecho o Posponer 10 min",
-    "Si la app estaba cerrada, avisa al abrirla de los recordatorios pendientes"
+    "App instalable en Android: APK compilado automáticamente en GitHub (Releases → bettarea.apk)",
+    "La app instalada se actualiza sola desde GitHub Pages",
+    "Funciona sin conexión e icono propio de Bettarea",
+    "Configuración → Actualizaciones: botón para descargar el APK"
   ]
 }
