@@ -64,9 +64,9 @@ jobs:
               release {
                 if (System.getenv('KEYSTORE_PATH')) {
                   storeFile file(System.getenv('KEYSTORE_PATH'))
-                  storePassword System.getenv('KEYSTORE_PASSWORD')
+                  storePassword System.getenv('KEYSTORE_PASSWORD')?.trim()
                   keyAlias 'bettarea'
-                  keyPassword System.getenv('KEYSTORE_PASSWORD')
+                  keyPassword System.getenv('KEYSTORE_PASSWORD')?.trim()
                 }
               }
             }
@@ -160,7 +160,7 @@ jobs:
           KS: ${{ secrets.ANDROID_KEYSTORE_B64 }}
         run: |
           if [ -n "$KS" ]; then
-            echo "$KS" | base64 -d > "$RUNNER_TEMP/bettarea.jks"
+            echo "$KS" | tr -d ' \r\n' | base64 -d > "$RUNNER_TEMP/bettarea.jks"
             echo "KEYSTORE_PATH=$RUNNER_TEMP/bettarea.jks" >> "$GITHUB_ENV"
           else
             echo "::warning::Falta el secreto ANDROID_KEYSTORE_B64: el APK se firmará con una clave temporal."
