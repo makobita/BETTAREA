@@ -1,0 +1,194 @@
+name: Compilar APK Android
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Leer versión
+        id: v
+        run: echo "name=$(jq -r .version version.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Crear proyecto Android (Trusted Web Activity)
+        run: |
+          set -e
+          A=android-build
+          rm -rf $A && mkdir -p $A/app/src/main/res/values
+          cat > $A/settings.gradle <<'EOF'
+          pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }
+          dependencyResolutionManagement {
+            repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+            repositories { google(); mavenCentral() }
+          }
+          rootProject.name = "Bettarea"
+          include ':app'
+          EOF
+          cat > $A/build.gradle <<'EOF'
+          plugins { id 'com.android.application' version '8.3.2' apply false }
+          EOF
+          cat > $A/gradle.properties <<'EOF'
+          android.useAndroidX=true
+          org.gradle.jvmargs=-Xmx2g
+          EOF
+          cat > $A/app/build.gradle <<'EOF'
+          plugins { id 'com.android.application' }
+          android {
+            namespace 'es.bettarea.app'
+            compileSdk 34
+            defaultConfig {
+              applicationId 'es.bettarea.app'
+              minSdk 21
+              targetSdk 34
+              versionCode Integer.parseInt(System.getenv('VERSION_CODE') ?: '1')
+              versionName System.getenv('VERSION_NAME') ?: '0.0.0'
+            }
+            signingConfigs {
+              release {
+                if (System.getenv('KEYSTORE_PATH')) {
+                  storeFile file(System.getenv('KEYSTORE_PATH'))
+                  storePassword System.getenv('KEYSTORE_PASSWORD')
+                  keyAlias 'bettarea'
+                  keyPassword System.getenv('KEYSTORE_PASSWORD')
+                }
+              }
+            }
+            buildTypes {
+              release {
+                minifyEnabled false
+                signingConfig System.getenv('KEYSTORE_PATH') ? signingConfigs.release : signingConfigs.debug
+              }
+            }
+            compileOptions {
+              sourceCompatibility JavaVersion.VERSION_17
+              targetCompatibility JavaVersion.VERSION_17
+            }
+          }
+          dependencies { implementation 'com.google.androidbrowserhelper:androidbrowserhelper:2.5.0' }
+          EOF
+          cat > $A/app/src/main/AndroidManifest.xml <<'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <application
+              android:allowBackup="true"
+              android:icon="@mipmap/ic_launcher"
+              android:roundIcon="@mipmap/ic_launcher"
+              android:label="@string/app_name"
+              android:theme="@android:style/Theme.Translucent.NoTitleBar">
+              <meta-data android:name="asset_statements" android:resource="@string/asset_statements" />
+              <activity
+                android:name="com.google.androidbrowserhelper.trusted.LauncherActivity"
+                android:exported="true"
+                android:label="@string/app_name">
+                <meta-data android:name="android.support.customtabs.trusted.DEFAULT_URL" android:value="https://makobita.github.io/BETTAREA/" />
+                <meta-data android:name="android.support.customtabs.trusted.STATUS_BAR_COLOR" android:resource="@color/brand" />
+                <meta-data android:name="android.support.customtabs.trusted.NAVIGATION_BAR_COLOR" android:resource="@color/dark" />
+                <meta-data android:name="android.support.customtabs.trusted.SPLASH_IMAGE_DRAWABLE" android:resource="@mipmap/ic_launcher" />
+                <meta-data android:name="android.support.customtabs.trusted.SPLASH_SCREEN_BACKGROUND_COLOR" android:resource="@color/bg" />
+                <meta-data android:name="android.support.customtabs.trusted.SPLASH_SCREEN_FADE_OUT_DURATION" android:value="300" />
+                <meta-data android:name="android.support.customtabs.trusted.FILE_PROVIDER_AUTHORITY" android:value="es.bettarea.app.fileprovider" />
+                <meta-data android:name="android.support.customtabs.trusted.FALLBACK_STRATEGY" android:value="customtabs" />
+                <intent-filter>
+                  <action android:name="android.intent.action.MAIN" />
+                  <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+                <intent-filter android:autoVerify="true">
+                  <action android:name="android.intent.action.VIEW" />
+                  <category android:name="android.intent.category.DEFAULT" />
+                  <category android:name="android.intent.category.BROWSABLE" />
+                  <data android:scheme="https" android:host="makobita.github.io" android:pathPrefix="/BETTAREA" />
+                </intent-filter>
+              </activity>
+              <provider
+                android:name="androidx.core.content.FileProvider"
+                android:authorities="es.bettarea.app.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+                <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/filepaths" />
+              </provider>
+            </application>
+            <queries>
+              <intent><action android:name="android.support.customtabs.action.CustomTabsService" /></intent>
+            </queries>
+          </manifest>
+          EOF
+          mkdir -p $A/app/src/main/res/xml
+          cat > $A/app/src/main/res/xml/filepaths.xml <<'EOF'
+          <paths><files-path path="twa_splash/" name="twa_splash" /></paths>
+          EOF
+          cat > $A/app/src/main/res/values/strings.xml <<'EOF'
+          <resources>
+            <string name="app_name">Bettarea</string>
+            <string name="asset_statements">[{\"relation\": [\"delegate_permission/common.handle_all_urls\"], \"target\": {\"namespace\": \"web\", \"site\": \"https://makobita.github.io\"}}]</string>
+          </resources>
+          EOF
+          cat > $A/app/src/main/res/values/colors.xml <<'EOF'
+          <resources>
+            <color name="brand">#FF6600</color>
+            <color name="dark">#141414</color>
+            <color name="bg">#F8F6F3</color>
+          </resources>
+          EOF
+          # Iconos a partir de icon-512.png
+          command -v convert >/dev/null || (sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick)
+          for d in mdpi:48 hdpi:72 xhdpi:96 xxhdpi:144 xxxhdpi:192; do
+            n=${d%%:*}; s=${d##*:}
+            mkdir -p $A/app/src/main/res/mipmap-$n
+            convert icon-512.png -resize ${s}x${s} $A/app/src/main/res/mipmap-$n/ic_launcher.png
+          done
+
+      - name: Clave de firma
+        env:
+          KS: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+        run: |
+          if [ -n "$KS" ]; then
+            echo "$KS" | base64 -d > "$RUNNER_TEMP/bettarea.jks"
+            echo "KEYSTORE_PATH=$RUNNER_TEMP/bettarea.jks" >> "$GITHUB_ENV"
+          else
+            echo "::warning::Falta el secreto ANDROID_KEYSTORE_B64: el APK se firmará con una clave temporal."
+          fi
+
+      - name: Compilar APK
+        working-directory: android-build
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+          VERSION_NAME: ${{ steps.v.outputs.name }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: gradle assembleRelease --no-daemon --stacktrace
+
+      - name: Preparar archivo
+        run: cp android-build/app/build/outputs/apk/release/app-release.apk bettarea.apk
+
+      - name: Publicar en Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.v.outputs.name }}
+          name: Bettarea ${{ steps.v.outputs.name }}
+          body: |
+            APK de Bettarea · Control interno, versión ${{ steps.v.outputs.name }}.
+            Descarga **bettarea.apk** e instálalo en la tablet. La app se actualiza sola desde https://makobita.github.io/BETTAREA/
+          files: bettarea.apk
+          make_latest: true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bettarea-apk-${{ steps.v.outputs.name }}
+          path: bettarea.apk
