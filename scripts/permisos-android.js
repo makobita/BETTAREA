@@ -1,4 +1,4 @@
-// Ajusta el proyecto Android: permisos de Bluetooth (impresora), notificaciones (recordatorios),
+// Ajusta el proyecto Android: permisos de Bluetooth (impresora), micrófono (búsqueda por voz), notificaciones (recordatorios),
 // instalación de actualizaciones, orientación libre, pantalla siempre encendida y pantalla completa.
 // Se ejecuta una vez, después de "npx cap add android".
 const fs = require('fs');
@@ -17,6 +17,7 @@ const permisos = [
   '<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />',
   '<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />',
   '<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />',
+  '<uses-permission android:name="android.permission.RECORD_AUDIO" />',
   '<uses-feature android:name="android.hardware.bluetooth" android:required="false" />',
   '<uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />'
 ];
@@ -24,6 +25,10 @@ let añadidos = 0;
 for (const p of permisos) {
   const nombre = p.match(/android:name="([^"]+)"/)[1];
   if (!xml.includes('"' + nombre + '"')) { xml = xml.replace('</manifest>', '    ' + p + '\n</manifest>'); añadidos++; }
+}
+// Búsqueda por voz: Android 11+ necesita poder ver el servicio de reconocimiento de voz
+if (!xml.includes('android.speech.RecognitionService')) {
+  xml = xml.replace('</manifest>', '    <queries>\n        <intent>\n            <action android:name="android.speech.RecognitionService" />\n        </intent>\n    </queries>\n</manifest>');
 }
 // La app gira libremente (vertical u horizontal)
 xml = xml.replace(/ android:screenOrientation="[^"]*"/g, '');
