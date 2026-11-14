@@ -7,7 +7,8 @@
 <meta name="theme-color" content="#FFFFFF" id="themeColor">
 <script>try{var t=localStorage.getItem('bettarea-theme');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');if(localStorage.getItem('bettarea-avisos')==='off')document.documentElement.setAttribute('data-noavisos','');}catch(e){}</script>
 <title>Bettarea · Control interno</title>
-<meta name="app-version" content="0.3.4">
+<meta name="app-version" content="0.4.3">
+<meta name="referrer" content="no-referrer">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
@@ -161,7 +162,20 @@ main{max-width:1440px;margin:0 auto;padding:24px}
 .stk.out{color:var(--danger);background:var(--danger-50)}
 .lotb{position:absolute;top:8px;left:8px;background:var(--orange);color:#fff;font-size:10px;font-weight:800;padding:4px 8px;border-radius:999px;letter-spacing:.04em;text-transform:uppercase}
 .incart{position:absolute;top:8px;right:8px;background:var(--ink);color:var(--on-ink);min-width:24px;height:24px;border-radius:999px;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 7px}
-.pc.dis{opacity:.5;pointer-events:none}
+.pc.dis{opacity:.55}
+.cl.clov .lt{color:var(--orange-d)}
+.lpf{display:flex;flex-direction:column;gap:6px;margin-top:14px}
+.lpf label{font-size:12px;font-weight:700;color:var(--ink-2)}
+.dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dgrid .tchip{height:44px}
+.lpsum{margin-top:12px;color:var(--ink-2);min-height:20px}
+.modal .acts .btn-t{padding:0 8px}
+.pc.dis .ph{filter:grayscale(.7)}
+.stkt{flex:none;display:flex;align-items:center;gap:10px;height:46px;padding:0 12px 0 14px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);font-weight:700;font-size:13px;color:var(--ink-2);white-space:nowrap}
+.stkt.on{border-color:var(--orange-100);background:var(--tint)}
+.stkt .sw{transform:scale(.85)}
+.stkt.on .sw{background:var(--orange)}
+.stkt.on .sw::after{left:21px}
 
 .cart{position:sticky;top:92px;display:flex;flex-direction:column;max-height:calc(100vh - 116px);max-height:calc(100dvh - 116px)}
 .cart-h{padding:18px 20px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
@@ -232,6 +246,12 @@ tbody tr:hover{background:var(--soft)}
 
 /* Drawer / modal */
 .ov{position:fixed;inset:0;background:rgba(20,20,20,.35);backdrop-filter:blur(2px);z-index:50;opacity:0;pointer-events:none;transition:.2s}
+/* Tema oscuro: las ventanas que aparecen encima van un poco más claras para destacar */
+[data-theme="dark"] .drawer,[data-theme="dark"] .modal,[data-theme="dark"] .alarm-card,[data-theme="dark"] .cart.open{
+  --surface:#26231F; --line:#3A3632; --line-2:#302C29; --soft:#2C2926; --tint:#2E241C; --ph2:#2C2926; --sw-off:#4A4540; --hover-line:#4A4540}
+[data-theme="dark"] .drawer.on{box-shadow:-24px 0 70px rgba(0,0,0,.6);border-left:1px solid #3A3632}
+[data-theme="dark"] .modal{box-shadow:0 30px 80px rgba(0,0,0,.6);border:1px solid #3A3632}
+[data-theme="dark"] .ov{background:rgba(0,0,0,.55)}
 .ov.on{opacity:1;pointer-events:auto}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100vw);background:var(--surface);z-index:60;transform:translateX(100%);transition:transform .28s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;visibility:hidden}
 .drawer.on{transform:none;visibility:visible;box-shadow:-20px 0 60px rgba(0,0,0,.25)}
@@ -267,10 +287,48 @@ tbody tr:hover{background:var(--soft)}
 .ppreview{display:flex;gap:14px;align-items:center}
 .ppreview img{width:96px;height:72px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
 .web-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.wopt{aspect-ratio:4/3;border-radius:10px;border:2px solid var(--line);overflow:hidden;background:var(--ph2);position:relative;transition:.15s}
+/* Alta de producto: todo a la vista, sin desplazarse */
+.drawer.pwide{width:min(1180px,100vw)}
+.pdb{padding:14px 24px 16px}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;align-items:start}
+.pcats{grid-column:1/-1;display:grid;gap:12px}
+.pcats.n2{grid-template-columns:1fr 1fr}.pcats.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pcol{display:flex;flex-direction:column;gap:12px;min-width:0}
+.pdb .field{gap:5px}
+.pdb .inp{height:42px}
+.pdb .toggle{padding:11px 14px}
+.pdb .sub-box{margin-top:-13px;padding:12px 14px}
+.pdb .lotrow{margin-bottom:6px}
+.pdb .addlot{height:36px}
+.pfoto{grid-column:1/-1}
+.wtop{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.wtop b{font-weight:700;font-size:14px}
+.wback{display:flex;align-items:center;gap:4px;font-weight:700;color:var(--muted);height:30px;padding:0 6px 0 0}
+.wback svg{width:16px;height:16px}
+.wmore{color:var(--orange-d)}
+.pfoto .wopt{aspect-ratio:3/2}
+.pfoto .web-grid .wopt.sk{aspect-ratio:3/2}
+.pfoto .photo-opts{grid-template-columns:repeat(3,1fr)}
+.pfoto .web-grid{grid-template-columns:repeat(4,1fr);margin-top:8px}
+.pfoto .ppreview img{width:160px;height:120px}
+.pfoto .ppbtns{display:flex;flex-direction:column;gap:8px}
+@media (orientation:landscape) and (min-width:900px){
+  .pgrid{grid-template-columns:1.1fr 1fr 1fr}
+  .pfoto{grid-column:auto}
+  .pfoto .photo-opts{grid-template-columns:1fr;gap:8px}
+  .pfoto .popt{display:grid;grid-template-columns:24px 1fr;column-gap:12px;row-gap:1px;align-items:center;padding:11px 14px}
+  .pfoto .popt svg{grid-row:span 2}
+  .pfoto .web-grid{grid-template-columns:1fr 1fr}
+  .pfoto .ppreview{flex-direction:column;align-items:stretch}
+  .pfoto .ppreview img{width:100%;height:auto;aspect-ratio:3/2}
+}
+.wopt{position:relative;aspect-ratio:4/3;border-radius:10px;border:2px solid var(--line);overflow:hidden;background:var(--ph2);position:relative;transition:.15s}
 .wopt img{width:100%;height:100%;object-fit:cover}
 .wopt:hover{border-color:var(--orange)}
 .wopt.sk{animation:pulse 1.2s infinite ease-in-out;pointer-events:none}
+.wopt .wsv{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);color:#fff;font-weight:800;font-size:13px}
+.wopt.saving{border-color:var(--orange)}
+.wopt:disabled:not(.saving){opacity:.5}
 @keyframes pulse{50%{opacity:.5}}
 .note{font-size:11px;color:var(--muted);margin-top:8px}
 
@@ -502,7 +560,7 @@ code{font-size:12px;background:var(--surface);padding:1px 5px;border-radius:5px}
 .mtot span{color:var(--muted);font-weight:600}.mtot b{font-size:30px;font-weight:800;letter-spacing:-.02em}
 .mtag2{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;background:var(--ink);color:var(--on-ink);padding:2px 6px;border-radius:6px;margin-right:4px}
 .muted-i{color:var(--muted);font-style:italic;font-weight:600}
-@media (max-width:960px){ .force span{display:none} .force{width:46px;padding:0} }
+@media (max-width:960px){ .force span{display:none} .force{width:46px;padding:0} .stkt{padding:0 8px 0 10px} }
 .sec-h{display:flex;align-items:baseline;gap:10px;margin:20px 2px -4px}
 .sec-h b{font-weight:800;font-size:15px;display:flex;align-items:center;gap:6px}
 .sec-h small{color:var(--muted);font-weight:600;font-size:12px}
@@ -739,6 +797,7 @@ setInterval(()=>{ if(!S.ready) return; const k=bizDate(Date.now()); if(lastBiz &
 
 
 async function boot(){
+  fotosCargar();
   let db=null;
   try{ if (window.claude && window.claude.use) db = await window.claude.use('db'); }catch(e){ db=null; }
   if (db){
@@ -762,7 +821,7 @@ function onErr(e){ setSync('Sin acceso a los datos',false); if(!S.ready){S.ready
 function setSync(t,live){ const el=$('#sync'); el.className='sync'+(live?' live':''); el.querySelector('span').textContent=t; }
 
 /* ---------- Estado de UI ---------- */
-const U = { view:'venta', cat:'all', sub:'all', sub2:'all', addIn:null, q:'', cart:[], gtab:'inv', gq:'', gcat:'all', cartOpen:false };
+const U = { view:'venta', cat:'all', sub:'all', sub2:'all', addIn:null, showOut:(()=>{ try{ return localStorage.getItem('bettarea-sinstock')==='1'; }catch(e){ return false; } })(), q:'', cart:[], gtab:'inv', gq:'', gcat:'all', cartOpen:false };
 
 $('#seg').addEventListener('click', e=>{
   const b=e.target.closest('button'); if(!b) return;
@@ -835,7 +894,9 @@ function matchQ(p,q){ if(!q) return true; const t=normTx(p.name+' '+(p.tech||'')
 const VOZ={on:false,rec:null};
 const vozPlugin=()=>window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.SpeechRecognition;
 function vozPoner(t){ t=String(t||'').trim().replace(/[.,;:!?¿¡]+/g,''); if(!t) return; U.q=t; render(); }
-function vozParar(){ try{ VOZ.rec&&VOZ.rec.stop(); }catch(e){} try{ const SR=vozPlugin(); SR&&SR.stop(); }catch(e){} }
+function vozFin(){ clearTimeout(VOZ.t); VOZ.on=false; VOZ.rec=null; render(); }
+function vozVigila(){ clearTimeout(VOZ.t); VOZ.t=setTimeout(()=>{ if(VOZ.on) vozParar(); },8000); }
+async function vozParar(){ try{ VOZ.rec&&VOZ.rec.stop(); }catch(e){} try{ const SR=vozPlugin(); if(SR&&enApp()) await SR.stop(); }catch(e){} if(!VOZ.rec) vozFin(); }
 async function vozBuscar(){
   if(VOZ.on) return vozParar();
   const SR=vozPlugin();
@@ -844,33 +905,44 @@ async function vozBuscar(){
       const av=await SR.available(); if(!av||!av.available) return toast('El reconocimiento de voz no está disponible en esta tablet');
       let pm=await SR.checkPermissions(); if(pm.speechRecognition!=='granted') pm=await SR.requestPermissions();
       if(pm.speechRecognition!=='granted') return toast('Hay que permitir el micrófono');
-      VOZ.on=true; render();
-      const r=await SR.start({language:'es-ES',maxResults:3,prompt:'Di el nombre del producto',partialResults:false,popup:true});
-      vozPoner(r&&r.matches&&r.matches[0]);
-    }catch(e){ if(!/cancel|match|no se/i.test(String(e&&e.message||e))) toast('No te he entendido. Prueba otra vez'); }
-    finally{ VOZ.on=false; render(); }
+      try{ await SR.removeAllListeners(); }catch(e){}
+      await SR.addListener('partialResults',d=>{ const t=d&&d.matches&&d.matches[0]; if(t){ vozPoner(t); vozVigila(); } });
+      try{ await SR.addListener('listeningState',d=>{ if(d&&d.status==='stopped'&&VOZ.on) vozFin(); }); }catch(e){}
+      VOZ.on=true; U.q=''; render(); vozVigila();
+      await SR.start({language:'es-ES',maxResults:1,partialResults:true,popup:false});
+    }catch(e){ vozFin(); if(!/cancel|match|no se/i.test(String(e&&e.message||e))) toast('No te he entendido. Prueba otra vez'); }
     return;
   }
   const W=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!W) return toast('La búsqueda por voz no está disponible aquí');
-  const rec=new W(); rec.lang='es-ES'; rec.interimResults=true; rec.maxAlternatives=1; VOZ.rec=rec; VOZ.on=true; render();
+  const rec=new W(); rec.lang='es-ES'; rec.interimResults=true; rec.maxAlternatives=1; VOZ.rec=rec; VOZ.on=true; U.q=''; render();
   rec.onresult=e=>vozPoner([...e.results].map(r=>r[0].transcript).join(''));
   rec.onerror=e=>{ if(e.error==='not-allowed'||e.error==='service-not-allowed') toast('Hay que permitir el micrófono'); else if(e.error!=='no-speech'&&e.error!=='aborted') toast('No te he entendido. Prueba otra vez'); };
-  rec.onend=()=>{ VOZ.on=false; VOZ.rec=null; render(); };
+  rec.onend=()=>vozFin();
   try{ rec.start(); }catch(e){ VOZ.on=false; VOZ.rec=null; render(); }
 }
-const thumb = (p, cls) => p.photo ? `<img src="${esc(p.photo)}" alt="" loading="lazy">` : I.fish;
+/* ---------- Fotos guardadas dentro de la app (IndexedDB: cabe mucho más que en el almacenamiento normal) ---------- */
+const FOTOS={}; let fotosDb=null;
+function fotosAbrir(){ if(fotosDb) return fotosDb; fotosDb=new Promise((ok,ko)=>{ try{ const r=indexedDB.open('bettarea-fotos',1);
+  r.onupgradeneeded=()=>r.result.createObjectStore('f'); r.onsuccess=()=>ok(r.result); r.onerror=()=>ko(r.error); }catch(e){ ko(e); } }); return fotosDb; }
+async function fotoGuardar(k,v){ const db=await fotosAbrir(); await new Promise((ok,ko)=>{ const t=db.transaction('f','readwrite'); t.objectStore('f').put(v,k); t.oncomplete=ok; t.onerror=()=>ko(t.error); }); FOTOS[k]=v; }
+async function fotoBorrar(k){ try{ const db=await fotosAbrir(); await new Promise(ok=>{ const t=db.transaction('f','readwrite'); t.objectStore('f').delete(k); t.oncomplete=ok; t.onerror=ok; }); }catch(e){} delete FOTOS[k]; }
+async function fotosCargar(){ try{ const db=await fotosAbrir(); await new Promise(ok=>{ const t=db.transaction('f','readonly'), st=t.objectStore('f'), rq=st.openCursor();
+  rq.onsuccess=()=>{ const c=rq.result; if(c){ FOTOS[c.key]=c.value; c.continue(); } else ok(); }; rq.onerror=ok; }); }catch(e){} if(S.ready) render(); }
+const fotoSrc = ph => !ph ? '' : String(ph).startsWith('idb:') ? (FOTOS[ph.slice(4)]||'') : ph;
+const thumb = (p, cls) => { const src=fotoSrc(p.photo); return src ? `<img src="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : I.fish; };
 
 /* ================= VENTA ================= */
 function viewVenta(){
   const list = S.products
     .filter(p => U.cat==='all' || (U.cat==='fav' ? p.fav : inCat(p, U.sub2!=='all'?U.sub2:U.sub!=='all'?U.sub:U.cat)))
     .filter(p => matchQ(p, U.q))
+    .filter(p => U.showOut || (+p.stock||0)>0)
     .sort((a,b)=>a.name.localeCompare(b.name,'es'));
   const cats = secList().filter(c=>countIn(c.id)>0);
   const subs = (U.cat!=='all'&&U.cat!=='fav') ? subsOf(U.cat).filter(c=>countIn(c.id)>0) : [];
   const subs2 = (subs.length&&U.sub!=='all') ? subsOf(U.sub).filter(c=>countIn(c.id)>0) : [];
-  const favs = favList();
+  const favs = favList().filter(p=>U.showOut||(+p.stock||0)>0);
   const showFavSec = favs.length && U.cat==='all' && !U.q;
   const favSec = showFavSec ? `<div class="sec-h fav"><b>${I.starF}Favoritos</b><small>ordenados por lo que más vendes</small></div><div class="grid favgrid">${favs.map(pcard).join('')}</div>` : '';
 
@@ -880,6 +952,7 @@ function viewVenta(){
         <div><div class="h1">Venta</div></div>
         <div class="sp" style="flex:1"></div>
         <div class="search voz"> ${I.search}<input class="inp" id="q" placeholder="${VOZ.on?'Te escucho…':'Buscar o dictar…'}" value="${esc(U.q)}" oninput="U.q=this.value;render()">${U.q?`<button class="clr" onclick="U.q='';render()" aria-label="Borrar búsqueda">${I.x}</button>`:''}<button class="mic ${VOZ.on?'on':''}" onclick="vozBuscar()" aria-label="Buscar por voz" title="Buscar por voz">${I.mic}</button></div>
+        <button class="stkt ${U.showOut?'on':''}" onclick="toggleShowOut()" title="Mostrar también los productos sin stock">Sin stock<span class="sw"></span></button>
         <button class="btn btn-p force" onclick="openManual()">${I.bolt}<span>Forzar venta</span></button>
       </div>
       <div class="chips">
@@ -928,7 +1001,9 @@ function emptyState(t,s,cta){
 function goConta(){ U.view='conta'; U.acc.mode='hoy'; [...$('#seg').children].forEach(x=>x.classList.toggle('on',x.dataset.v==='conta')); render(); }
 function goGestion(){ U.view='gestion'; U.gtab='inv'; [...$('#seg').children].forEach(x=>x.classList.toggle('on',x.dataset.v==='gestion')); render(); openProduct(); }
 
-function cartTotal(){ return r2(U.cart.reduce((a,l)=>{ if(l.custom) return a+r2(l.qty*l.custom.price); const p=S.products.find(x=>x.id===l.id); return a+(p?priceFor(p,l.qty).total:0); },0)); }
+/* Total de una línea: precio cambiado a mano / descuento, o el normal con lotes */
+function lineTotal(p,l){ return l.price!=null ? r2(l.qty*l.price) : priceFor(p,l.qty).total; }
+function cartTotal(){ return r2(U.cart.reduce((a,l)=>{ if(l.custom) return a+r2(l.qty*l.custom.price); const p=S.products.find(x=>x.id===l.id); return a+(p?lineTotal(p,l):0); },0)); }
 
 function cartPanel(){
   U.cart = U.cart.filter(l=>l.custom||S.products.some(p=>p.id===l.id));
@@ -939,13 +1014,14 @@ function cartPanel(){
       <div class="qty"><button onclick="chg('${l.id}',-1)" aria-label="Restar">${I.minus}</button><span class="num">${l.qty}</span><button onclick="chg('${l.id}',1)" aria-label="Sumar">${I.plus}</button></div>
       <div class="cl-act"><button class="icon-btn danger" onclick="rm('${l.id}')" aria-label="Eliminar">${I.trash}</button></div>
     </div>`;
-    const p=S.products.find(x=>x.id===l.id); const pr=priceFor(p,l.qty);
-    const lb=lotBreak(p,l.qty), nd=lotNudge(p,l.qty);
-    return `<div class="cl">
-      <div><div class="nm">${esc(p.name)}</div><div class="meta">${lb.long?esc(lb.long):eur(p.price)+' / ud'}</div>${pr.saved>0?`<div class="save">Ahorro por lote −${eur(pr.saved)}</div>`:''}
+    const p=S.products.find(x=>x.id===l.id); const pr=priceFor(p,l.qty), ov=l.price!=null;
+    const lb=lotBreak(p,l.qty), nd=ov?null:lotNudge(p,l.qty);
+    return `<div class="cl ${ov?'clov':''}" ondblclick="if(!event.target.closest('button'))openLinePrice('${p.id}')">
+      <div><div class="nm">${esc(p.name)}</div>${ov?`<div class="meta"><s>${eur(p.price)}</s> ${eur(l.price)} / ud</div><div class="save">${l.disc?`Descuento ${l.disc}%`:'Precio cambiado'}${l.price<(+p.price||0)?` · −${eur(r2(l.qty*((+p.price||0)-l.price)))}`:''}</div>`
+        :`<div class="meta">${lb.long?esc(lb.long):eur(p.price)+' / ud'}</div>${pr.saved>0?`<div class="save">Ahorro por lote −${eur(pr.saved)}</div>`:''}`}
         ${nd?`<button class="nudge" onclick="chg('${p.id}',${nd.k})">${I.plus}${nd.extra>0.009?`Añade ${nd.k} y completa el lote: +${eur(nd.extra)} <s>${eur(nd.extra+nd.save)}</s>`:nd.extra<-0.009?`Añade ${nd.k} más y paga ${eur(-nd.extra)} menos`:`Añade ${nd.k} más sin pagar nada`}</button>`:''}</div>
-      <div class="lt num">${eur(pr.total)}</div>
-      <div class="qty"><button onclick="chg('${p.id}',-1)" aria-label="Restar">${I.minus}</button><span class="num">${l.qty}</span><button onclick="chg('${p.id}',1)" aria-label="Sumar" ${l.qty>=(+p.stock||0)?'disabled style="opacity:.3"':''}>${I.plus}</button></div>
+      <div class="lt num">${eur(lineTotal(p,l))}</div>
+      <div class="qty"><button onclick="chg('${p.id}',-1)" aria-label="Restar">${I.minus}</button><span class="num">${l.qty}</span><button onclick="chg('${p.id}',1)" aria-label="Sumar" ${l.qty>=(+p.stock||0)&&!l.force?'style="opacity:.45"':''}>${I.plus}</button></div>
       <div class="cl-act"><button class="icon-btn danger" onclick="rm('${p.id}')" aria-label="Eliminar">${I.trash}</button></div>
     </div>`;}).join('');
   return `<aside class="card cart ${U.cartOpen?'open':''}">
@@ -958,16 +1034,49 @@ function cartPanel(){
   </aside>`;
 }
 
+/* ---------- Cambiar el precio de una línea de la cesta (doble toque) ---------- */
+const DTOS=[10,15,20,25,30,40,50]; let LP=null;
+function openLinePrice(id){
+  const l=U.cart.find(x=>x.id===id), p=S.products.find(x=>x.id===id); if(!l||!p) return;
+  LP={id, base:+p.price||0, disc:l.disc||null, val:l.price!=null?String(l.price).replace('.',','):''};
+  drawLinePrice(); $('#modal').classList.add('on'); $('#ov').classList.add('on');
+  setTimeout(()=>{ const i=$('#lp-in'); if(i&&!LP.disc){ i.focus(); i.select(); } },150);
+}
+function drawLinePrice(){
+  const p=S.products.find(x=>x.id===LP.id), l=U.cart.find(x=>x.id===LP.id); if(!p||!l) return closeModal();
+  const v=num(LP.val), has=LP.val!=='' && v>=0;
+  $('#modal').innerHTML=`<h3>Cambiar precio</h3><p>${esc(p.name)} · precio normal <b>${eur(LP.base)}</b> / ud · ${l.qty} ud${l.qty>1?'s':''}</p>
+    <div class="lpf"><label>Precio por unidad para esta venta (€)</label>
+      <input class="inp big" id="lp-in" inputmode="decimal" placeholder="${eur(LP.base).replace(/\s*€/,'')}" value="${esc(LP.val)}" oninput="LP.val=this.value;LP.disc=null;lpSum()"></div>
+    <div class="lpf"><label>O aplica un descuento</label>
+      <div class="dgrid">${DTOS.map(d=>`<button class="tchip ${LP.disc===d?'on':''}" onclick="LP.disc=${d};LP.val=String(r2(LP.base*(1-${d}/100))).replace('.',',');drawLinePrice()">−${d}%</button>`).join('')}</div></div>
+    <div class="lpsum" id="lp-sum"></div>
+    <div class="acts">${l.price!=null?`<button class="btn btn-t" style="margin-right:auto" onclick="lpQuitar()">Quitar cambio</button>`:''}<button class="btn btn-g" onclick="closeModal()">Cancelar</button><button class="btn btn-p" onclick="lpAplicar()">${I.check}Aplicar</button></div>`;
+  lpSum();
+}
+function lpSum(){ const el=$('#lp-sum'); if(!el) return; const l=U.cart.find(x=>x.id===LP.id); const v=num(LP.val);
+  el.innerHTML = LP.val===''?'':`Total de la línea: <b>${eur(r2(v*l.qty))}</b>${v<LP.base?` · ahorra ${eur(r2((LP.base-v)*l.qty))}`:''}`; }
+function lpAplicar(){ const l=U.cart.find(x=>x.id===LP.id); if(!l) return closeModal();
+  if(LP.val===''){ closeModal(); return; } const v=r2(num(LP.val)); if(!(v>=0)){ toast('Pon un precio válido'); return; }
+  l.price=v; l.disc=LP.disc||null; closeModal(); render(); toast(l.disc?`Descuento del ${l.disc}% aplicado`:'Precio cambiado para esta venta'); }
+function lpQuitar(){ const l=U.cart.find(x=>x.id===LP.id); if(l){ delete l.price; delete l.disc; } closeModal(); render(); toast('Precio normal'); }
+function toggleShowOut(){ U.showOut=!U.showOut; try{ localStorage.setItem('bettarea-sinstock',U.showOut?'1':'0'); }catch(e){} render(); }
+/* Sin stock: se pregunta una vez y, si se acepta, se puede vender igualmente (por si aún no está dado de alta) */
+function askNoStock(p,cb){
+  const st=+p.stock||0;
+  modal('Sin stock', st<=0?`No hay stock de «${esc(p.name)}». ¿Seguro que quieres venderlo?`:`Solo quedan ${st} de «${esc(p.name)}». ¿Seguro que quieres vender más?`, cb, 'Sí, vender', 'btn-p', 'No');
+}
 function addToCart(id){
   const p=S.products.find(x=>x.id===id); if(!p) return;
   const l=U.cart.find(x=>x.id===id); const cur=l?l.qty:0;
-  if (cur>=(+p.stock||0)) return toast('No hay más stock de '+p.name);
-  l ? l.qty++ : U.cart.push({id,qty:1}); render();
+  const add=()=>{ const x=U.cart.find(y=>y.id===id); x ? x.qty++ : U.cart.push({id,qty:1}); render(); };
+  if (cur>=(+p.stock||0) && !(l&&l.force)) return askNoStock(p,()=>{ add(); const x=U.cart.find(y=>y.id===id); if(x) x.force=true; render(); });
+  add();
 }
 function chg(id,d){ const l=U.cart.find(x=>x.id===id); const p=S.products.find(x=>x.id===id); if(!l) return; d=+d;
   if(l.custom){ l.qty+=d; if(l.qty<=0) U.cart=U.cart.filter(x=>x!==l); render(); return; }
-  l.qty+=d; if(d>0 && l.qty>(+p.stock||0)){ l.qty=+p.stock; toast('Stock máximo alcanzado'); }
-  if(l.qty<=0) U.cart=U.cart.filter(x=>x!==l); render(); }
+  if(d>0 && l.qty+d>(+p.stock||0) && !l.force) return askNoStock(p,()=>{ l.force=true; l.qty+=d; render(); });
+  l.qty+=d; if(l.qty<=0) U.cart=U.cart.filter(x=>x!==l); render(); }
 function rm(id){ U.cart=U.cart.filter(x=>x.id!==id); render(); }
 
 let selling=false;
@@ -979,6 +1088,8 @@ async function confirmSale(){
     for (const l of U.cart){
       if(l.custom){ items.push({pid:null,name:l.custom.name||'',qty:l.qty,unit:l.custom.price,total:r2(l.qty*l.custom.price),saved:0,manual:true}); continue; }
       const p=S.products.find(x=>x.id===l.id); if(!p) continue;
+      if(l.price!=null){ const u=+p.price||0, tot=r2(l.qty*l.price), sv=r2(l.qty*u-tot);
+        items.push(sv>0?{pid:p.id,name:p.name,qty:l.qty,unit:u,total:tot,saved:sv,dto:l.disc?l.disc+'%':'Precio especial'}:{pid:p.id,name:p.name,qty:l.qty,unit:l.price,total:tot,saved:0}); continue; }
       const pr=priceFor(p,l.qty);
       items.push({pid:p.id,name:p.name,qty:l.qty,unit:+p.price||0,total:pr.total,saved:pr.saved||0,lots:lotBreak(p,l.qty).short});
       await Store.patch('products', p.id, {stock: Math.max(0,(+p.stock||0)-l.qty)});
@@ -1130,10 +1241,10 @@ async function safe(fn){ try{ await fn(); }catch(e){ toast(e&&e.code==='quota_ex
 /* ---------- Ficha de producto ---------- */
 let F=null;
 function openProduct(id){
-  $('#drawer').classList.remove('wide');
+  $('#drawer').classList.remove('wide'); $('#drawer').classList.add('pwide');
   const p = id ? S.products.find(x=>x.id===id) : null;
   F = p ? JSON.parse(JSON.stringify(p)) : { id:null, catId:(U.gcat!=='all'?U.gcat:(secList()[0]||{}).id)||'', name:'', tech:'', stock:'', price:'', lotsOn:false, lots:[], date:today(), photo:'' };
-  F.photoOn = !!F.photo; F.photoMode = null; F.web = null;
+  F.photoOn = true; F.photoMode = null; F.web = null;
   if (!F.lots || !F.lots.length) F.lots=[{qty:'',price:''}];
   drawDrawer(); $('#drawer').classList.add('on'); $('#ov').classList.add('on');
   setTimeout(()=>{ const n=$('#f-name'); n&&!id&&n.focus(); },250);
@@ -1145,11 +1256,11 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeModal(); clo
 function drawDrawer(){
   const edit=!!F.id;
   $('#drawer').innerHTML=`
-  <div class="dh"><b>${edit?'Editar producto':'Nuevo producto'}</b><button class="icon-btn" onclick="closeDrawer()">${I.x}</button></div>
-  <form class="db" id="pform" onsubmit="event.preventDefault();saveProduct()">
+  <div class="dh mdh"><b>${edit?'Editar producto':'Nuevo producto'}</b><button class="icon-btn" onclick="closeDrawer()">${I.x}</button></div>
+  <form class="db pdb" id="pform" onsubmit="event.preventDefault();saveProduct()"><div class="pgrid">
     ${(()=>{ const pa=catPath(F.catId).map(c=>c.id), sid=pa[0], l2=pa[1], subs=sid?subsOf(sid):[], subs2=l2?subsOf(l2):[];
       const n=1+(subs.length?1:0)+(subs2.length?1:0);
-      return `<div class="${n===3?'row3':n===2?'row2':''}">
+      return `<div class="pcats n${n}">
       <div class="field"><label>Sección</label>
         <select class="inp" onchange="F.catId=this.value;drawDrawer()">${secList().map(c=>`<option value="${c.id}" ${sid===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>
       ${subs.length?`<div class="field"><label>Subsección</label>
@@ -1157,6 +1268,7 @@ function drawDrawer(){
       ${subs2.length?`<div class="field"><label>Dentro de ${esc(catById(l2).name)}</label>
         <select class="inp" onchange="F.catId=this.value">${`<option value="${l2}">Sin elegir</option>`+subs2.map(c=>`<option value="${c.id}" ${F.catId===c.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></div>`:''}
     </div>`; })()}
+    <div class="pcol">
     <div class="field"><label>Nombre</label><input class="inp" id="f-name" value="${esc(F.name)}" oninput="F.name=this.value" placeholder="Ej. Betta Halfmoon Koi"></div>
     <div class="field"><label>Nombre técnico</label><input class="inp" style="font-style:italic" value="${esc(F.tech)}" oninput="F.tech=this.value" placeholder="Ej. Betta splendens"></div>
     <div class="row2">
@@ -1164,9 +1276,10 @@ function drawDrawer(){
       <div class="field"><label>Precio unidad (€)</label><input class="inp" id="f-price" inputmode="decimal" value="${esc(F.price)}" oninput="F.price=this.value" placeholder="0,00"></div>
     </div>
     <div class="field"><label>Fecha de entrada</label><input class="inp" type="date" value="${esc(F.date)}" onchange="F.date=this.value"></div>
-
-    <div class="toggle ${F.fav?'on':''}" onclick="F.fav=!F.fav;drawDrawer()"><div><b>${I.starF.replace('<svg','<svg class="tstar"')}Favorito</b><small>Aparece arriba en Venta, en la sección Favoritos</small></div><span class="sw"></span></div>
-    <div class="toggle ${F.lotsOn?'on':''}" onclick="F.lotsOn=!F.lotsOn;drawDrawer()"><div><b>Oferta por lote</b><small>Precio especial al comprar varias unidades</small></div><span class="sw"></span></div>
+    </div>
+    <div class="pcol">
+    <div class="toggle ${F.fav?'on':''}" onclick="F.fav=!F.fav;drawDrawer()"><div><b>${I.starF.replace('<svg','<svg class="tstar"')}Favorito</b><small>Sale arriba del todo en Venta</small></div><span class="sw"></span></div>
+    <div class="toggle ${F.lotsOn?'on':''}" onclick="F.lotsOn=!F.lotsOn;drawDrawer()"><div><b>Oferta por lote</b><small>Precio especial por varias unidades</small></div><span class="sw"></span></div>
     <div class="sub-box ${F.lotsOn?'':'hide'}">
       ${F.lots.map((l,i)=>`<div class="lotrow">
         <div class="field"><label>Cantidad del lote</label><input class="inp" inputmode="numeric" value="${esc(l.qty)}" oninput="F.lots[${i}].qty=this.value;lotHint()" placeholder="Ej. 5"></div>
@@ -1176,10 +1289,9 @@ function drawDrawer(){
       <button type="button" class="addlot" onclick="F.lots.push({qty:'',price:''});drawDrawer()">${I.plus}Añadir otro lote</button>
       <div class="lotdesc" id="lothint"></div>
     </div>
-
-    <div class="toggle ${F.photoOn?'on':''}" onclick="F.photoOn=!F.photoOn;if(!F.photoOn){F.photo='';F.web=null;F.photoMode=null}drawDrawer()"><div><b>Foto</b><small>Desde tu dispositivo o buscando en línea</small></div><span class="sw"></span></div>
-    <div class="sub-box ${F.photoOn?'':'hide'}">${photoBox()}</div>
-  </form>
+    </div>
+    <div class="pcol pfoto"><div class="field"><label>Foto</label></div>${photoBox()}</div>
+  </div></form>
   <div class="df"><button class="btn btn-g" onclick="closeDrawer()">Cancelar</button><button class="btn btn-p" onclick="saveProduct()">${I.check}${edit?'Guardar cambios':'Dar de alta'}</button></div>`;
   lotHint();
 }
@@ -1191,22 +1303,19 @@ function lotHint(){
 }
 
 function photoBox(){
-  if (F.photo && !F.web) return `<div class="ppreview"><img src="${esc(F.photo)}" alt=""><div style="display:flex;flex-direction:column;gap:6px">
-     <button type="button" class="btn btn-g" style="height:34px" onclick="F.photo='';F.photoMode=null;drawDrawer()">Cambiar foto</button></div></div>`;
+  if (F.photo && !F.web) return `<div class="ppreview"><img src="${esc(fotoSrc(F.photo))}" alt="" referrerpolicy="no-referrer"><div class="ppbtns">
+     <button type="button" class="btn btn-g" onclick="F.photo='';F.photoMode=null;drawDrawer()">Cambiar foto</button></div></div>`;
   if (F.web) {
-    if (F.web.loading) return `<button type="button" class="btn btn-t" style="padding:0" onclick="F.web=null;drawDrawer()">${I.back}Volver</button>
-      <div style="font-weight:700;margin-top:6px">Buscando imágenes de «${esc(F.web.term)}»…</div>
+    if (F.web.loading) return `<div class="wtop"><button type="button" class="wback" onclick="F.web=null;drawDrawer()">${I.back}Volver</button><b>Buscando fotos…</b></div>
       <div class="web-grid">${'<div class="wopt sk"></div>'.repeat(4)}</div>`;
-    if (F.web.error) return `<button type="button" class="btn btn-t" style="padding:0" onclick="F.web=null;drawDrawer()">${I.back}Volver</button><div class="note" style="font-size:13px;margin-top:6px">${esc(F.web.error)}</div>`;
-    return `<button type="button" class="btn btn-t" style="padding:0" onclick="F.web=null;drawDrawer()">${I.back}Volver</button>
-      <div style="font-weight:700;margin-top:6px">Elige la que más te guste</div>
-      <div class="web-grid">${F.web.opts.map((o,i)=>`<button type="button" class="wopt" onclick="pickWeb(${i})"><img src="${esc(o)}" alt="Opción ${i+1}"></button>`).join('')}</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><span class="note" style="margin:0">Ilustraciones generadas para «${esc(F.web.term)}»</span><button type="button" class="btn btn-t" onclick="webSearch()">Otras 4</button></div>`;
+    if (F.web.error) return `<div class="wtop"><button type="button" class="wback" onclick="F.web=null;drawDrawer()">${I.back}Volver</button></div><div class="note" style="font-size:13px;margin-top:6px">${esc(F.web.error)}</div>`;
+    return `<div class="wtop"><button type="button" class="wback" onclick="F.web=null;drawDrawer()">${I.back}Volver</button>${F.web.all&&F.web.all.length>F.web.pos+4?`<button type="button" class="wback wmore" ${F.web.saving!=null?'disabled':''} onclick="webSearch(true)">${I.refresh}Otras 4</button>`:''}</div>
+      <div class="web-grid">${F.web.opts.map((o,i)=>`<button type="button" class="wopt ${F.web.saving===i?'saving':''}" ${F.web.saving!=null?'disabled':''} onclick="pickWeb(${i})"><img src="${esc(o.thumb)}" alt="Opción ${i+1}" referrerpolicy="no-referrer">${F.web.saving===i?'<span class="wsv">Guardando…</span>':''}</button>`).join('')}</div>`;
   }
   return `<div class="photo-opts">
     <button type="button" class="popt" onclick="$('#cam').click()">${I.camera}<b>Cámara</b><small>Haz la foto ahora</small></button>
     <button type="button" class="popt" onclick="$('#file').click()">${I.img}<b>Galería</b><small>Fotos o archivos</small></button>
-    <button type="button" class="popt" onclick="webSearch()">${I.globe}<b>Buscar en línea</b><small>Te propongo 4 opciones</small></button>
+    <button type="button" class="popt" onclick="webSearch()">${I.globe}<b>Buscar en Google</b><small>Elige entre 4 fotos</small></button>
   </div>`;
 }
 
@@ -1228,30 +1337,67 @@ function shrink(file){
   });
 }
 
-let sampleFn;
-async function webSearch(){
-  const term=(F.name||'').trim(); const tech=(F.tech||'').trim();
-  if(!term && !tech){ toast('Escribe primero el nombre del pez'); $('#f-name')&&$('#f-name').focus(); return; }
-  F.web={loading:true,term:term||tech}; drawDrawer();
+/* ---------- Fotos de Google Imágenes (desde la app de Android) ---------- */
+const G_UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
+async function httpGet(url,opts){
+  const H=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.CapacitorHttp;
+  if(!(enApp()&&H)) throw {code:'no_app'};
+  const r=await H.get({url,headers:(opts&&opts.headers)||{},responseType:(opts&&opts.type)||'text',connectTimeout:12000,readTimeout:20000});
+  if(r.status<200||r.status>=300) throw {code:'http',status:r.status};
+  return r;
+}
+function googleParse(html){
+  const un=t=>t.replace(/\\u003d/g,'=').replace(/\\u0026/g,'&').replace(/\\u0025/g,'%').replace(/\\\//g,'/');
+  const re=/\["(https?:\/\/[^"]+?)",(\d+),(\d+)\]/g, out=[], seen=new Set(); let m, thumb=null;
+  while((m=re.exec(html))&&out.length<24){
+    const u=un(m[1]);
+    if(/gstatic\.com\/images/.test(u)){ thumb=u; continue; }
+    if(!thumb||seen.has(u)||/google\.|gstatic\.|\.svg(\?|$)/i.test(u)||+m[2]<120){ thumb=null; continue; }
+    seen.add(u); out.push({thumb,full:u}); thumb=null;
+  }
+  return out;
+}
+async function webSearch(next){
+  if(next&&F.web&&F.web.all&&F.web.all.length>F.web.pos+4){ F.web.pos+=4; F.web.opts=F.web.all.slice(F.web.pos,F.web.pos+4); drawDrawer(); return; }
+  const term=(F.name||'').trim()||(F.tech||'').trim();
+  if(!term){ toast('Escribe primero el nombre del pez'); $('#f-name')&&$('#f-name').focus(); return; }
+  F.web={loading:true,term}; drawDrawer();
   try{
-    if (sampleFn===undefined) sampleFn = (window.claude&&window.claude.use) ? await window.claude.use('sample') : null;
-    if (!sampleFn) throw {code:'not_granted'};
-    const prompt = `Eres ilustrador para una tienda de acuariofilia. Crea 4 ilustraciones SVG distintas, bonitas y realistas en lo posible, del animal acuático "${term}"${tech?` (nombre científico: ${tech})`:''}, fieles a su forma, aletas y colores reales.
-Requisitos de cada SVG: viewBox="0 0 400 300", sin texto, sin scripts, sin imágenes externas, fondo de acuario suave (degradado) y el animal centrado y grande, con degradados para dar volumen. Varía el ángulo, el fondo y el estilo entre las 4 (por ejemplo: perfil clásico, fondo oscuro elegante, plantas acuáticas, estilo minimalista). Máximo 5000 caracteres por SVG.
-Responde SOLO con JSON: {"options":["<svg ...>...</svg>","<svg ...>","<svg ...>","<svg ...>"]}`;
-    const out = await sampleFn.json(prompt,{modelTier:'default', cache:false});
-    const opts=((out&&out.options)||[]).map(s=>String(s||'').trim()).filter(s=>/^<svg[\s>]/i.test(s)&&s.length<60000)
-      .map(s=>'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s.replace(/<script[\s\S]*?<\/script>/gi,'')));
+    const url='https://www.google.com/search?udm=2&tbm=isch&hl=es&gl=es&safe=active&q='+encodeURIComponent(term);
+    const r=await httpGet(url,{headers:{'User-Agent':G_UA,'Accept-Language':'es-ES,es;q=0.9','Accept':'text/html',
+      'Cookie':'CONSENT=YES+cb.20240101-00-p0.es+FX+000; SOCS=CAESEwgDEgk0ODE3Nzk3MjQaAmVzIAEaBgiA_LyaBg'}});
+    const all=googleParse(String(r.data||''));
     if(!F||!F.web) return;
-    if(!opts.length) throw {code:'empty'};
-    F.web={term:F.web.term,opts:opts.slice(0,4)};
+    if(!all.length) throw {code:'empty'};
+    F.web={term,all,pos:0,opts:all.slice(0,4)};
   }catch(e){
     if(!F) return;
-    F.web={term:term||tech,error: e&&e.code==='not_granted' ? 'La búsqueda en línea necesita tu permiso. Ábrela desde la página de la app en Claude y acepta cuando te lo pida.' : e&&e.code==='rate_limited' ? 'Demasiadas búsquedas seguidas. Espera un momento y vuelve a probar.' : 'No se encontraron opciones. Prueba de nuevo o añade una foto desde el dispositivo.'};
+    F.web={term,error: e&&e.code==='no_app' ? 'La búsqueda de fotos en Google solo funciona en la app de Android.' : e&&e.code==='empty' ? 'Google no ha devuelto fotos. Prueba con otro nombre o haz la foto con la cámara.' : 'No se pudo conectar con Google. Comprueba la conexión a internet.'};
   }
   drawDrawer();
 }
-function pickWeb(i){ F.photo=F.web.opts[i]; F.web=null; drawDrawer(); }
+function dataUrlShrink(src,M,q){
+  M=M||640; q=q||0.8;
+  return new Promise((res,rej)=>{ const im=new Image();
+    im.onload=()=>{ let w=im.naturalWidth,h=im.naturalHeight; if(!w||!h) return rej(); const k=Math.min(1,M/Math.max(w,h)); w=Math.round(w*k); h=Math.round(h*k);
+      const c=document.createElement('canvas'); c.width=w; c.height=h; const x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,w,h); x.drawImage(im,0,0,w,h); res(c.toDataURL('image/jpeg',q)); };
+    im.onerror=rej; im.src=src; });
+}
+async function bajarFoto(url,M,q){
+  const r=await httpGet(url,{type:'blob',headers:{'User-Agent':G_UA,'Accept':'image/avif,image/webp,image/*,*/*'}});
+  const hd=r.headers||{}; let ct=String(hd['Content-Type']||hd['content-type']||'image/jpeg').split(';')[0];
+  if(!/^image\//.test(ct)) ct='image/jpeg';
+  const b64=String(r.data||'').replace(/\s/g,''); if(b64.length<200) throw new Error('vacia');
+  return await dataUrlShrink('data:'+ct+';base64,'+b64,M,q);
+}
+async function pickWeb(i){
+  const o=F.web&&F.web.opts[i]; if(!o) return; F.web.saving=i; drawDrawer();
+  let foto='';
+  try{ foto=await bajarFoto(o.full); }catch(e){ try{ foto=await bajarFoto(o.thumb); }catch(_){ foto=''; } }
+  if(!F) return;
+  if(!foto){ F.web.saving=null; drawDrawer(); toast('No se pudo descargar esa foto. Elige otra'); return; }
+  F.photo=foto; F.web=null; drawDrawer(); toast('Foto guardada en la app');
+}
 
 async function saveProduct(){
   if(!F) return;
@@ -1310,7 +1456,7 @@ function openDev(){
   PR.open=false; PR.fromCfg=false; DEV.open=true; DEV.tab=null; $('#drawer').classList.add('wide'); drawDev(); $('#drawer').classList.add('on'); $('#ov').classList.add('on');
 }
 const _closeDrawer = closeDrawer;
-closeDrawer = function(){ if (DEV.busy) return; M=null; RM.open=false; $('#drawer').classList.remove('xwide','mwide'); DEV.open=false; PR.open=false; PR.fromCfg=false; TK.edit=false; _closeDrawer(); setTimeout(()=>{ if(!$('#drawer').classList.contains('on')) $('#drawer').classList.remove('wide'); },300); };
+closeDrawer = function(){ if (DEV.busy) return; M=null; RM.open=false; $('#drawer').classList.remove('xwide','mwide','pwide'); DEV.open=false; PR.open=false; PR.fromCfg=false; TK.edit=false; _closeDrawer(); setTimeout(()=>{ if(!$('#drawer').classList.contains('on')) $('#drawer').classList.remove('wide'); },300); };
 
 const THEME_KEY='bettarea-theme';
 function avisosOn(){ return !document.documentElement.hasAttribute('data-noavisos'); }
@@ -1432,20 +1578,46 @@ function cfgCaja(){
   <p class="note" style="margin:0;font-size:12.5px">El cierre manual se hace desde Contabilidad → Hoy → «Cierre de caja».</p>`;
 }
 function cfgDatos(){
-  const demoN=S.products.filter(p=>p.demo).length, on=demoN>0;
+  const demoN=S.products.filter(p=>p.demo).length, on=demoN>0, n=webCount(), won=!!S.settings.webStock, bz=DEV.busy?'disabled':'';
+  const bySec=secList().map(c=>[c.name,S.products.filter(p=>p.web&&inCat(p,c.id)).length]).filter(x=>x[1]);
   return `
-    <div class="sec-t">Datos de prueba</div>
-    <div class="toggle ${on?'on':''} ${DEV.busy?'busy':''}" onclick="toggleDemo(${on})">
-      <div><b>Datos de prueba cargados</b><small>${DEMO.products.length} productos de bettarea.es con stock y fechas inventados; la mitad con foto</small></div><span class="sw"></span></div>
-    <div class="devcard"><h4>Resetear</h4>
-      <p>Borra todo lo que haya (productos, ventas, cierres y categorías) y vuelve a cargar las categorías y los datos de prueba desde cero. La configuración no se toca.</p>
-      <button class="btn btn-danger" style="margin-top:12px" ${DEV.busy?'disabled':''} onclick="askReset()">${I.trash}Resetear y cargar datos de prueba</button></div>
     <div class="devcard ${DEV.busy?'':'hide'}" id="devprog"><h4 id="devlbl">${esc(DEV.label)}</h4><div class="prog"><i id="devbar"></i></div><div class="proglbl" id="devnum"></div></div>
+
+    <div class="sec-t">1 · Datos de prueba inventados</div>
+    <div class="toggle ${on?'on':''} ${DEV.busy?'busy':''}" onclick="toggleDemo(${on})">
+      <div><b>Cargar datos inventados</b><small>${DEMO.products.length} peces de ejemplo con stock y fechas inventados</small></div><span class="sw"></span></div>
+    ${on?`<button class="btn btn-g" style="align-self:flex-start" ${bz} onclick="demoResetAsk()">${I.refresh}Restablecer stock inicial</button>`:''}
+
+    <div class="sec-t">2 · Datos de bettarea.es</div>
+    <div class="devcard"><h4>Productos de la tienda online</h4>
+      <p>Descarga todos los productos de bettarea.es (menos Betta World) con su precio, cada uno en su sección, y guarda sus fotos dentro de la app (en calidad reducida, para que se vean sin internet). Se crean con <b>stock 0</b>.${n?' Si vuelves a cargar, se actualizan nombre, precio, foto y sección sin tocar el stock.':''}</p>
+      <button class="btn btn-p" style="margin-top:12px" ${bz} onclick="webLoadBtn()">${I.down}${n?'Volver a cargar desde la web':'Cargar datos de bettarea.es'}</button>
+      ${!enApp()?`<div class="note" style="margin-top:8px">Solo funciona en la app de Android.</div>`:''}</div>
+    ${n?`<div class="toggle ${won?'on':''} ${DEV.busy?'busy':''}" onclick="webStockToggle()">
+      <div><b>Cargar stock inventado</b><small>Pone stock inventado a los ${n} productos de la web. Apagado vuelven a 0.</small></div><span class="sw"></span></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn btn-g" ${bz} onclick="webResetAsk()">${I.refresh}Restablecer stock inicial</button>
+      ${webFotosPend().length&&enApp()?`<button class="btn btn-g" ${bz} onclick="webFotosBtn()">${I.img}Guardar fotos en la app (${webFotosPend().length})</button>`:''}
+      <button class="btn btn-t" ${bz} onclick="webRemoveAsk()">${I.trash}Quitar productos de la web</button></div>
+    <div class="devkv">${bySec.map(([k,v])=>`<span>${esc(k)}</span><b>${v}</b>`).join('')}<span>Total</span><b>${n}</b></div>`:''}
+
+    <div class="sec-t">Todo</div>
+    <div class="devcard"><h4>Resetear</h4>
+      <p>Borra todo lo que haya (productos, ventas, cierres y secciones) y vuelve a cargar las secciones y los datos inventados desde cero. La configuración no se toca.</p>
+      <button class="btn btn-danger" style="margin-top:12px" ${bz} onclick="askReset()">${I.trash}Resetear y cargar datos de prueba</button></div>
     <div class="devcard"><h4>Estado</h4><div class="devkv" style="margin-top:8px">
-      <span>Almacenamiento</span><b>${S.mode==='db'?'Nube de la app':'Este navegador'}</b>
-      <span>Categorías</span><b>${S.cats.length}</b><span>Productos</span><b>${S.products.length}</b>
-      <span>· de prueba</span><b>${demoN}</b><span>Ventas recientes</span><b>${S.sales.length}</b><span>Cierres de caja</span><b>${S.closures.length}</b></div></div>`;
+      <span>Almacenamiento</span><b>${S.mode==='db'?'Nube de la app':'Este dispositivo'}</b>
+      <span>Secciones</span><b>${S.cats.length}</b><span>Productos</span><b>${S.products.length}</b>
+      <span>· inventados</span><b>${demoN}</b><span>· de la web</span><b>${n}</b><span>Ventas recientes</span><b>${S.sales.length}</b><span>Cierres de caja</span><b>${S.closures.length}</b></div></div>`;
 }
+/* Stock inicial de los datos inventados */
+async function resetDemoStock(){
+  const ini={}; DEMO.products.forEach(p=>ini[p.id]=+p.stock||0);
+  const list=S.products.filter(p=>p.demo&&ini[p.id]!=null); DEV.total=list.length; DEV.done=0; updProg();
+  if(S.mode==='local'){ list.forEach(p=>p.stock=ini[p.id]); DEV.done=list.length; lsSave(); render(); return; }
+  for(const p of list){ await withRetry(()=>Store.patch('products',p.id,{stock:ini[p.id]})); step(); }
+}
+function demoResetAsk(){ if(DEV.busy) return; modal('Restablecer stock','Los datos inventados volverán a tener el stock del principio. Se pierden los cambios de stock que hayas hecho en ellos.', ()=>runDev('Restableciendo stock…', resetDemoStock, 'Stock inicial restablecido'),'Restablecer','btn-p'); }
 function drawDev(){
   if (!DEV.open) return;
   const tab=DEV.tab||null;
@@ -1462,7 +1634,7 @@ function drawDev(){
   };
   const chev='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg>';
   const row=(k,title,sub,val,onclick)=>`<button class="cfgrow" onclick="${onclick||`DEV.tab='${k}';drawDev()`}"><span class="cfgic">${ic[k]}</span><span class="cfgtx"><b>${title}</b><small>${sub}</small></span>${val?`<span class="cfgval">${val}</span>`:''}<span class="chev">${chev}</span></button>`;
-  const titles={perso:'Personalización',ticket:'Ticket',caja:'Caja y cierre del día',datos:'Datos de prueba',upd:'Actualizaciones',web:'Cargar datos web'};
+  const titles={perso:'Personalización',ticket:'Ticket',caja:'Caja y cierre del día',datos:'Datos de prueba',upd:'Actualizaciones',web:'Datos de prueba'};
   let head, body;
   if(!tab){
     const demoN=S.products.filter(p=>p.demo).length;
@@ -1477,11 +1649,8 @@ function drawDev(){
         ${row('ticket','Ticket','Logo, textos y diseño del recibo', PR.paper+' mm')}
         ${row('caja','Caja y cierre del día','Cierre automático y cierre manual', S.settings.cutoff)}
       </div></div>
-      <div class="cfggrp"><div class="sec-t">Productos</div><div class="cfgcard">
-        ${row('web','Cargar datos web','Productos, secciones y fotos de bettarea.es', webCount()?webCount()+' productos':'No cargados')}
-      </div></div>
       <div class="cfggrp"><div class="sec-t">Pruebas</div><div class="cfgcard">
-        ${row('datos','Datos de prueba','Productos de ejemplo de bettarea.es', demoN?'Cargados':'No cargados')}
+        ${row('datos','Datos de prueba','Inventados y de bettarea.es', [demoN?'Inventados':'',webCount()?'Web':''].filter(Boolean).join(' + ')||'No cargados')}
       </div></div>
       <div class="cfgfoot"><img src="${DEFAULT_LOGO()}" alt=""><span>Bettarea · v${UPS.version}</span></div>
     </div>`;
@@ -1494,7 +1663,7 @@ function drawDev(){
       <div class="sec-t">Pantalla principal</div>
       <div class="toggle ${avisosOn()?'on':''}" onclick="setAvisos(!avisosOn())"><div><b>Botón de avisos</b><small>Muestra la campana de recordatorios arriba a la derecha</small></div><span class="sw"></span></div>
       <p class="note" style="margin:0">Estos ajustes se guardan en esta tablet.</p>`
-      : tab==='ticket' ? cfgTicket() : tab==='caja' ? cfgCaja() : tab==='upd' ? cfgUpd() : tab==='web' ? cfgWeb() : cfgDatos();
+      : tab==='ticket' ? cfgTicket() : tab==='caja' ? cfgCaja() : tab==='upd' ? cfgUpd() : cfgDatos();
   }
   $('#drawer').innerHTML=head+`<div class="db${tab==='ticket'?' tkdb':''}">${body}</div>`;
   const nsc=$('#drawer .db'); if(nsc) nsc.scrollTop=top; const nc=$('#tkctl'); if(nc) nc.scrollTop=ctop; const np=$('#tkprevcol'); if(np) np.scrollTop=ptop;
@@ -1575,13 +1744,30 @@ async function loadWeb(){
     for(const n of x.sub){ k+='|'+n; if(!subIds[k]) subIds[k]=await webSub(par,n); par=subIds[k]; } x.catId=par; }
   const on=!!S.settings.webStock, byWeb={}; S.products.forEach(p=>{ if(p.webId) byWeb[p.webId]=p; });
   const docs=plan.map(x=>{ const inv=webInv(x.webId,x.sec), catId=x.catId, ex=byWeb[x.webId];
-    return ex ? {...ex, name:x.name, price:x.price, photo:x.photo||ex.photo, catId, webStock:inv, web:true}
+    return ex ? {...ex, name:x.name, price:x.price, photo:String(ex.photo||'').startsWith('idb:')?ex.photo:(x.photo||ex.photo), catId, webStock:inv, web:true}
               : { id:'w'+x.webId, webId:x.webId, web:true, catId, name:x.name, tech:'', stock:on?inv:0, webStock:inv, price:x.price, lotsOn:false, lots:[], date:today(), photo:x.photo }; });
   DEV.label='Guardando productos…'; DEV.total=docs.length; DEV.done=0; updProg();
   if(S.mode==='local'){ const idx={}; S.products.forEach((p,i)=>idx[p.id]=i); docs.forEach(d=>{ if(idx[d.id]!=null) S.products[idx[d.id]]=d; else S.products.push(d); }); DEV.done=docs.length; lsSave(); render(); }
   else for(const d of docs){ await withRetry(()=>Store.put('products',d)); step(); }
   WEB_LAST=docs.length;
+  await webFotos();
 }
+/* Descarga las fotos de los productos de la web y las guarda dentro de la app (calidad reducida) */
+const webFotosPend = () => S.products.filter(p=>p.web&&/^https?:/.test(p.photo||''));
+async function webFotos(){
+  if(!enApp()) return;
+  const list=webFotosPend(); if(!list.length) return;
+  DEV.label='Guardando las fotos en la app…'; DEV.total=list.length; DEV.done=0; updProg();
+  let i=0, ok=0, cambios=0;
+  const uno=async()=>{ while(i<list.length){ const p=list[i++]; const k='w'+(p.webId||p.id);
+    try{ const d=await bajarFoto(p.photo,260,0.6); await fotoGuardar(k,d); ok++;
+      if(S.mode==='local'){ p.photo='idb:'+k; if(++cambios%40===0) lsSave(); } else await withRetry(()=>Store.patch('products',p.id,{photo:'idb:'+k}));
+    }catch(e){} step(); } };
+  await Promise.all([uno(),uno(),uno(),uno()]);
+  if(S.mode==='local'){ lsSave(); render(); }
+  if(ok<list.length) toast(`Fotos guardadas: ${ok} de ${list.length}. Vuelve a pulsar para reintentar las que faltan`);
+}
+function webFotosBtn(){ if(DEV.busy) return; runDev('Guardando las fotos en la app…', webFotos, 'Fotos guardadas en la app'); }
 let WEB_LAST=0;
 async function setWebStock(on){
   S.settings.webStock=on; saveSettings();
@@ -1590,6 +1776,7 @@ async function setWebStock(on){
   for(const p of list){ await withRetry(()=>Store.patch('products',p.id,{stock:on?(+p.webStock||0):0})); step(); }
 }
 async function removeWeb(){
+  for(const p of S.products.filter(x=>x.web&&String(x.photo||'').startsWith('idb:'))) await fotoBorrar(p.photo.slice(4));
   if(S.mode==='local'){ S.products=S.products.filter(p=>!p.web); lsSave(); render(); return; }
   const list=S.products.filter(p=>p.web); DEV.total=list.length; updProg();
   for(const p of list){ await withRetry(()=>Store.del('products',p.id)); step(); }
@@ -1597,24 +1784,9 @@ async function removeWeb(){
 function webLoadBtn(){ if(DEV.busy) return; runDev('Conectando con bettarea.es…', loadWeb, 'Productos de la web cargados'); }
 function webStockToggle(){ if(DEV.busy) return; if(!webCount()) return toast('Primero carga los productos de la web'); const on=!S.settings.webStock;
   runDev(on?'Poniendo el stock inventado…':'Poniendo el stock a 0…', ()=>setWebStock(on), on?'Stock inventado cargado':'Stock de la web a 0'); }
-function webResetAsk(){ if(DEV.busy) return; modal('Restablecer valores','Los productos de la web volverán a tener el stock inventado inicial. Se pierden los cambios de stock que hayas hecho en ellos.', ()=>runDev('Restableciendo stock…', ()=>setWebStock(true), 'Stock inicial restablecido'),'Restablecer','btn-p'); }
+function webResetAsk(){ if(DEV.busy) return; const on=!!S.settings.webStock;
+  modal('Restablecer stock',on?'Los productos de la web volverán a tener el stock inventado del principio. Se pierden los cambios de stock que hayas hecho en ellos.':'Los productos de la web volverán a tener stock 0. Se pierden los cambios de stock que hayas hecho en ellos.', ()=>runDev('Restableciendo stock…', ()=>setWebStock(on), 'Stock inicial restablecido'),'Restablecer','btn-p'); }
 function webRemoveAsk(){ if(DEV.busy) return; modal('Quitar productos de la web',`Se eliminarán los ${webCount()} productos cargados desde la web. Las secciones se quedan.`, ()=>runDev('Quitando productos…', removeWeb, 'Productos de la web eliminados')); }
-function cfgWeb(){
-  const n=webCount(), on=!!S.settings.webStock, bySec=secList().map(c=>[c.name,S.products.filter(p=>p.web&&inCat(p,c.id)).length]).filter(x=>x[1]);
-  return `
-    <div class="devcard"><h4>Cargar datos web</h4>
-      <p>Descarga todos los productos de la tienda online (menos Betta World) con su foto y su precio, y los coloca en su sección y subsección como en la web. Se crean con stock 0.${n?' Si vuelves a cargar, se actualizan nombre, precio, foto y sección sin tocar el stock.':''}</p>
-      <button class="btn btn-p" style="margin-top:12px" ${DEV.busy?'disabled':''} onclick="webLoadBtn()">${I.down}${n?'Volver a cargar desde la web':'Cargar datos web'}</button></div>
-    <div class="toggle ${on?'on':''} ${DEV.busy||!n?'busy':''}" onclick="webStockToggle()">
-      <div><b>Cargar valores</b><small>Pone a los productos de la web un stock inventado. Al apagarlo vuelven a 0.</small></div><span class="sw"></span></div>
-    ${n&&on?`<div class="devcard"><h4>Restablecer valores</h4><p>Vuelve a poner el stock inventado inicial en los productos de la web, por si lo has gastado en las pruebas.</p>
-      <button class="btn btn-g" style="margin-top:12px" ${DEV.busy?'disabled':''} onclick="webResetAsk()">${I.refresh}Restablecer stock inicial</button></div>`:''}
-    <div class="devcard ${DEV.busy?'':'hide'}" id="devprog"><h4 id="devlbl">${esc(DEV.label)}</h4><div class="prog"><i id="devbar"></i></div><div class="proglbl" id="devnum"></div></div>
-    ${n?`<div class="devcard"><h4>Cargados</h4><div class="devkv" style="margin-top:8px">${bySec.map(([k,v])=>`<span>${esc(k)}</span><b>${v}</b>`).join('')}<span>Total</span><b>${n}</b></div>
-      <button class="btn btn-t" style="margin-top:12px" ${DEV.busy?'disabled':''} onclick="webRemoveAsk()">${I.trash}Quitar productos de la web</button></div>`:''}
-    ${!enApp()?`<div class="infobox">La descarga desde bettarea.es solo funciona en la <b>app de Android</b>.</div>`:''}`;
-}
-
 function toggleDemo(on){ if (DEV.busy) return; on ? runDev('Quitando datos de prueba…', removeDemo, 'Datos de prueba eliminados') : runDev('Cargando datos de prueba…', loadDemo, 'Datos de prueba cargados'); }
 function askReset(){ modal('Resetear todo','Se borrarán <b>todos</b> los productos, ventas y categorías, y se cargarán de nuevo los datos de prueba. No se puede deshacer.', ()=>runDev('Reseteando…', resetAll, 'Reset completado')); }
 
@@ -1844,7 +2016,7 @@ async function blockLines(b, data, paper){
       const unit=it.unit!=null?+it.unit:(it.qty?it.total/it.qty:0);
       if(it.name){ wrapT(it.name,{w:mw,h:mh,bold:true}); LR(`  ${it.qty} x ${eur(unit)}`, eur(it.total), {w:mw,h:mh}); }
       else LR(`${it.qty} x ${eur(unit)}`, eur(it.total), {w:mw,h:mh,bold:true});
-      if(+it.saved>0) LR(`  Oferta ${it.lots||'lote'}`, '-'+eur(it.saved));
+      if(+it.saved>0) LR(it.dto?(/%$/.test(it.dto)?`  Descuento ${it.dto}`:`  ${it.dto}`):`  Oferta ${it.lots||'lote'}`, '-'+eur(it.saved));
     }
     SEP();
   } else if(b.k==='total'){
@@ -2080,7 +2252,7 @@ function drawPrinter(){
 const withTimeout=conTiempo;
 
 /* ================= VERSIONES Y ACTUALIZACIONES (GitHub Releases, como GestFeria) ================= */
-const APP_VERSION='0.3.4';
+const APP_VERSION='0.4.3';
 const UPD={ repo:'makobita/BETTAREA', repoUrl:'https://github.com/makobita/BETTAREA' };
 const UPD_KEY='bettarea-update';
 const UPS=Object.assign({auto:true,last:0,latest:null},lsGet(UPD_KEY,{}));
