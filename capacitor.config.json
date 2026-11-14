@@ -1,0 +1,13 @@
+{
+  "appId": "es.bettarea.app",
+  "appName": "Bettarea",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "iconColor": "#FF6600"
+    }
+  }
+}
