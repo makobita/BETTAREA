@@ -3,11 +3,13 @@
   "appName": "Bettarea",
   "webDir": "www",
   "android": {
-    "allowMixedContent": false
+    "allowMixedContent": false,
+    "backgroundColor": "#FF6600"
   },
   "plugins": {
     "LocalNotifications": {
       "iconColor": "#FF6600"
     }
-  }
+  },
+  "backgroundColor": "#FF6600"
 }
